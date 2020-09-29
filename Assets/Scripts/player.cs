@@ -1,10 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class player : MonoBehaviour
 {
-    public float speed = 0;
+    public float speed = 0f;
     public bool isgrounded = false;
     public float rot = 0;
 
@@ -13,8 +13,6 @@ public class player : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(isgrounded);
-
         if (Input.GetKey(KeyCode.Mouse0) && isgrounded == false)
         {
             rb.MoveRotation(Quaternion.Euler(transform.rotation.x, transform.rotation.y, transform.rotation.z + rot));
@@ -35,11 +33,16 @@ public class player : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.Mouse0) && isgrounded == false)
-        {
+        if (isgrounded == false)
+        {   
             if (speed > 0)
-            speed = speed - 0.1f;
+            {
+                speed = speed - 0.1f;
+            }
             transform.Translate(rb.velocity.normalized * Time.deltaTime * speed);
+            //Vector3 oldDir = rb.velocity;
+            //rb.velocity = Quaternion.Euler(0, 0, 90) * oldDir;
+            //rb.AddForce(transform.forward * speed);
         }
     }
     void OnCollisionStay2D(Collision2D col)
